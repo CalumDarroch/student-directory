@@ -10,7 +10,7 @@ students = [
   ["Freddy Krueger", :november],
   ["The Joker", :november],
   ["Joffrey Baratheon", :november],
-  ["Norman Bates" :november]
+  ["Norman Bates", :november]
   ]
 
 def print_header
