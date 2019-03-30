@@ -78,15 +78,17 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Students saved to students.csv"
 end
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-  @name, @cohort = line.chomp.split(',')
+    @name, @cohort = line.chomp.split(',')
     add_students
   end
   file.close
+  puts "Loaded students from #{filename}"
 end
 
 def try_load_students
