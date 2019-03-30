@@ -21,23 +21,35 @@ def input_students
   students
 end
 
-def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+def print_header(students)
+  if students.length == 0
+    return nil
+  else    
+    puts "The students of Villains Academy"
+    puts "-------------"
+  end
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  if students.length == 0
+    puts "There are no students enrolled."
+  else    
+    students.each do |student|
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  if students.length == 0
+    return nil
+  else
+    puts "Overall, we have #{students.count} great students"
+  end
 end
 
 students = input_students
 #nothing happens until we call the methods
-print_header
+print_header(students)
 print(students)
 print_footer(students)
