@@ -17,7 +17,7 @@ def input_students
     
     while true do
       if months.include? cohort.downcase
-        students << {name: name.to_sym, cohort: cohort.to_sym}
+        students << {name: name, cohort: cohort}
         puts "Now we have #{students.count} students"
         break
       else
@@ -40,9 +40,16 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
-  end
+  while true do
+    puts "Which cohort would you like to print?"
+    print_cohort = gets.chomp.downcase
+    
+    filtered_students = students.select { |student| student[:cohort] == print_cohort}
+    
+    filtered_students.each do |student|
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end  
 end
 
 def print_footer(students)
