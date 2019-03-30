@@ -40,8 +40,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list of students"
+  puts "4. Load the list of students"
   puts "9. Exit"
 end
 
@@ -58,9 +58,11 @@ def process(selection)
     when "2"
       show_students
     when "3"
-      save_students
+      puts "What file do you want to save to?"
+      save_students(filename = STDIN.gets.chomp)
     when "4"
-      load_students
+      puts "What file do you want to load from?"
+      load_students(filename = STDIN.gets.chomp)
     when "9"
       exit # this will cause the program to terminate
     else
@@ -68,9 +70,9 @@ def process(selection)
   end
 end
 
-def save_students
+def save_students(filename)
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -78,15 +80,23 @@ def save_students
     file.puts csv_line
   end
   file.close
-  puts "Students saved to students.csv"
+  puts "Students saved to #{filename}"
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    @name, @cohort = line.chomp.split(',')
-    add_students
+while true do
+  if !File.exists?(filename)
+    puts "I couldn't find that file, please try again"
+    filename = gets.chomp
+  else
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      @name, @cohort = line.chomp.split(',')
+      add_students
+    end
+    break
   end
+end  
   file.close
   puts "Loaded students from #{filename}"
 end
