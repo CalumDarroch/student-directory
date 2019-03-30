@@ -72,14 +72,14 @@ end
 
 def save_students(filename)
   # open the file for writing
-  file = File.open(filename, "w")
+  File.open(filename, "w") do |f2|
   # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      f2.puts csv_line
+    end
   end
-  file.close
   puts "Students saved to #{filename}"
 end
 
@@ -89,15 +89,13 @@ while true do
     puts "I couldn't find that file, please try again"
     filename = gets.chomp
   else
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
+    File.open(filename, "r").readlines.each do |line|
       @name, @cohort = line.chomp.split(',')
       add_students
     end
     break
   end
-end  
-  file.close
+end
   puts "Loaded students from #{filename}"
 end
 
