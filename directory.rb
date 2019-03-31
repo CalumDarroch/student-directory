@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = [] # an empty array accessible to all methods
 
 def input_students
@@ -72,12 +74,10 @@ end
 
 def save_students(filename)
   # open the file for writing
-  File.open(filename, "w") do |f2|
+  CSV.open(filename, "w") do |csv|
   # iterate over the array of students
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      f2.puts csv_line
+      csv << [student[:name], student[:cohort]]
     end
   end
   puts "Students saved to #{filename}"
@@ -89,8 +89,8 @@ while true do
     puts "I couldn't find that file, please try again"
     filename = gets.chomp
   else
-    File.open(filename, "r").readlines.each do |line|
-      @name, @cohort = line.chomp.split(',')
+    CSV.foreach(filename) do |line|
+      @name, @cohort = line
       add_students
     end
     break
